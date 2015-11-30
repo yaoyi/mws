@@ -35,7 +35,7 @@ class Mws::Query
   private
 
   def normalize_key(key)
-    Mws::Utils.camelize(key).sub(/^Aws/, 'AWS').sub(".id.", ".Id.")
+    Mws::Utils.camelize(key).sub(/^Aws/, 'AWS').sub(".id.", ".Id.").sub(/^Mws/, 'MWS')
   end
 
   def normalize_val(value)

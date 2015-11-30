@@ -20,6 +20,7 @@ module Mws
       raise Mws::Errors::ValidationError, 'An access key must be specified.' if @access.nil?
       @secret = overrides[:secret]
       raise Mws::Errors::ValidationError, 'A secret key must be specified.' if @secret.nil?
+      @auth_token = overrides[:auth_token]
       @orders = Apis::Orders.new self
       @feeds = Apis::Feeds::Api.new self
       @reports = Apis::Reports::Api.new self
@@ -36,6 +37,7 @@ module Mws
     private
 
     def request(method, path, params, body, overrides)
+      params = params.merge({mws_auth_token: @auth_token}) unless @auth_token.nil?
       query = Query.new({
         action: overrides[:action],
         version: overrides[:version],
